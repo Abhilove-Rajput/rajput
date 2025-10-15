@@ -1,37 +1,17 @@
+# Use the official Nginx image
+FROM nginx:alpine
 
+# Set working directory inside the container
+WORKDIR /usr/share/nginx/html
 
-sudo apt update
-sudo apt install fontconfig openjdk-21-jre
-java -version
+# Remove default nginx static files
+RUN rm -rf ./*
 
+# Copy all files from current directory on host into nginx html folder
+COPY . .
 
-sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
-  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
-  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
-  /etc/apt/sources.list.d/jenkins.list > /dev/null
+# Expose port 80 for web traffic
+EXPOSE 80
 
-
-sudo apt-get update
-
-sudo apt-get install Jenkins
-
-
-sudo systemctl enable Jenkins
-
-
-sudo systemctl start Jenkins
-
-
-sudo systemctl status Jenkins
-
-
-ps -ef | grep Jenkins
-
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-
-
-
-Reference Links:
-https://github.com/mir-owahed/DevOps-tutorial
-
+# Start nginx (already configured in base image)
+CMD ["nginx", "-g", "daemon off;"]
