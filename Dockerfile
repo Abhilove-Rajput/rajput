@@ -3,7 +3,7 @@ FROM nginx:alpine
 
 # Set working directory inside the container
 WORKDIR /usr/share/nginx/html
-
+  
 # Remove default nginx static files
 RUN rm -rf ./*
 
@@ -15,3 +15,4 @@ EXPOSE 80
 
 # Start nginx (already configured in base image)
 CMD ["nginx", "-g", "daemon off;"]
+
